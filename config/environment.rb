@@ -1,3 +1,5 @@
+require File.expand_path('config/site.rb') if File.exists?('config/site.rb')
+
 if RUBY_VERSION.to_f >= 1.9
   require 'yaml'
   YAML::ENGINE.yamler = 'syck'
