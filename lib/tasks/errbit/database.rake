@@ -6,7 +6,9 @@ namespace :errbit do
     desc "Updates cached attributes on Problem"
     task :update_problem_attrs => :environment do
       puts "Updating problems"
-      Problem.all.each(&:cache_notice_attributes)
+      Problem.all.each{|problem|
+        ProblemUpdaterCache.new(problem).update
+      }
     end
 
     desc "Updates Problem#notices_count"
@@ -17,22 +19,10 @@ namespace :errbit do
       end
     end
 
-    desc "Delete resolved errors from the database, optionally only older than 'minage' days."
-    task :clear_resolved, [:minage] => :environment do |t, args|
-      cutoff = args[:minage] ? DateTime.now - args[:minage].to_i : nil
-      count = 0
-      Problem.resolved.each do |problem|
-        if not cutoff or problem.last_notice_at <= cutoff
-          begin
-            problem.destroy
-          rescue StandardError => e
-            $stderr.puts("Failed to delete problem #{problem.id}: #{e.message}")
-          else
-            count += 1
-          end
-        end
-      end
-      puts "=== Cleared #{count} resolved errors from the database." if count > 0
+    desc "Delete resolved errors from the database. (Useful for limited heroku databases)"
+    task :clear_resolved => :environment do |t, args|
+      require 'resolved_problem_clearer'
+      puts "=== Cleared #{ResolvedProblemClearer.new.execute(cutoff)} resolved errors from the database."
     end
 
     desc "Regenerate fingerprints"
