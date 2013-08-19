@@ -1,6 +1,9 @@
 require 'problem_destroy'
 
 class ResolvedProblemClearer
+  def initialize(keepdays=nil)
+    @keepdays = keepdays
+  end
 
   ##
   # Clear all problem already resolved
@@ -23,7 +26,12 @@ class ResolvedProblemClearer
   end
 
   def criteria
-    @criteria = Problem.resolved
+    if @keepdays
+      @criteria = Problem.resolved.where(:resolved_at.lt => DateTime.now - @keepdays)
+    else
+      @criteria = Problem.resolved
+    end
+    return @criteria
   end
 
   def repair_database
