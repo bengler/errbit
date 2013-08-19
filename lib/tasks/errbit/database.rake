@@ -22,7 +22,7 @@ namespace :errbit do
     desc "Delete resolved errors from the database. (Useful for limited heroku databases)"
     task :clear_resolved => :environment do |t, args|
       require 'resolved_problem_clearer'
-      puts "=== Cleared #{ResolvedProblemClearer.new.execute(cutoff)} resolved errors from the database."
+      puts "=== Cleared #{ResolvedProblemClearer.new.execute} resolved errors from the database."
     end
 
     desc "Regenerate fingerprints"
