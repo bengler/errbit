@@ -1,4 +1,28 @@
-## 0.2.0 - Not released Yet
+## 0.2.1 - Not released Yet
+
+### Improvements
+
+- [#552][] Limite size of asset on errbit ([@tscolari][])
+- [#562][] See the version number of errbit on footer ([@nashby][])
+- [#555][] Avoid same group by same error if other line of backtrace
+  instead of first change ([@shingara][])
+
+### Bug Fixes
+
+- [#558][] Avoid failure if you remote bitbucket_rest_api gem
+  ([@shingara][])
+- [#559][] Fix some issue on the migration with old database
+  ([@shingara][])
+
+[@nashby]: https://github.com/nashby
+[@shingara]: https://github.com/shingara
+[@tscolari]: https://github.com/tscolari
+
+[#552]: https://github.com/errbit/errbit/issues/552
+[#558]: https://github.com/errbit/errbit/issues/558
+[#562]: https://github.com/errbit/errbit/issues/562
+
+## 0.2.0 - 2013-09-11
 
 ### Improvements
 
@@ -17,6 +41,11 @@
   email from Errbit ([@shingara][])
 - [#532][] Use https link in Gravatar if you use errbit on https
   ([@jeroenj][])
+- [#536][] Order app by name by default ([@2called-chaos][])
+- [#542][] Allow the MONGODB_URL env configuration about Mongodb ([@bacongobbler][])
+- [#530][] Improve the flowdock notification ([@nfedyashev][])
+- [#531][] Improve the HipChat notification message ([@brendonrapp][])
+
 
 ### Bug Fixes
 
@@ -26,6 +55,8 @@
 - [#514][] Add CDATA in xml return by Javascript. ([@mildavw][])
 - [#517][] Javascript escape path from javascript Notifier. ([@roryf][])
 - [#518][] Fix issue when you try launch task errbit:db:update_update_problem_attrs. ([@shingara][])
+- [#526][] Fix issue of pagination after search. ([@shingara][])
+- [#528][] Fix issue of action after search. ([@shingara][])
 
 ## 0.1.0 - 2013-05-29
 
@@ -86,17 +117,25 @@
 [#516]: https://github.com/errbit/errbit/issues/516
 [#517]: https://github.com/errbit/errbit/issues/517
 [#524]: https://github.com/errbit/errbit/issues/524
+[#526]: https://github.com/errbit/errbit/issues/526
+[#528]: https://github.com/errbit/errbit/issues/528
+[#530]: https://github.com/errbit/errbit/issues/530
+[#531]: https://github.com/errbit/errbit/issues/531
 [#532]: https://github.com/errbit/errbit/issues/532
+[#542]: https://github.com/errbit/errbit/issues/542
 
 <!-- Contributor on Errbit Thanks to all of them -->
 
+[@2called-chaos]: https://github.com/2called-chaos
 [@Gonzih]: https://github.com/Gonzih
 [@SamSaffron]: https://github.com/SamSaffron
 [@adamjt]: https://github.com/adamjt
 [@aliscott]: http://github.com/aliscott
 [@alvarobp]: https://github.com/alvarobp
 [@arthurnn]: https://github.com/arthurnn
+[@bacongobbler]: https://github.com/bacongobbler
 [@boblail]: https://github.com/boblail
+[@brendonrapp]: https://github.com/brendonrapp
 [@chadcf]: https://github.com/chadcf
 [@ivanyv]: https://github.com/ivanyv
 [@jeroenj]: https://github.com/jeroenj
@@ -110,5 +149,5 @@
 [@shingara]: https://github.com/shingara
 [@tamaloa]: https://github.com/tamaloa
 [@tvdeyen]: https://github.com/tvdeyen
+[@williamn]: https://github.com/williamn
 [@xenji]: https://github.com/xenji
-
