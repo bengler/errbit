@@ -1,6 +1,6 @@
 # Errbit [![TravisCI][travis-img-url]][travis-ci-url] [![Code Climate][codeclimate-img-url]][codeclimate-url] [![Coveralls][coveralls-img-url]][coveralls-url] [![Dependency Status][gemnasium-img-url]][gemnasium-url]
 
-[travis-img-url]: https://secure.travis-ci.org/errbit/errbit.png?branch=master
+[travis-img-url]: https://travis-ci.org/errbit/errbit.svg?branch=master
 [travis-ci-url]: http://travis-ci.org/errbit/errbit
 [codeclimate-img-url]: https://codeclimate.com/github/errbit/errbit.png
 [codeclimate-url]: https://codeclimate.com/github/errbit/errbit
@@ -77,6 +77,20 @@ There is a demo available at [http://errbit-demo.herokuapp.com/](http://errbit-d
 
 Email: demo@errbit-demo.herokuapp.com<br/>
 Password: password
+
+# Requirement
+
+The list of requirement to install Errbit is :
+
+ * Ruby 1.9.3 or higher
+ * MongoDB 2.2.0 or higher
+
+By default it's the Ruby 2.0.0 to use. But you can define your own ruby
+version with RUBY_VERSION variable between :
+
+ * 1.9.3
+ * 2.0.0
+ * 2.1.0
 
 Installation
 ------------
@@ -165,6 +179,9 @@ heroku config:add HEROKU=true
 heroku config:add SECRET_TOKEN="$(bundle exec rake secret)"
 heroku config:add ERRBIT_HOST=some-hostname.example.com
 heroku config:add ERRBIT_EMAIL_FROM=example@example.com
+# This next line is required to access env variables during asset compilation.
+# For more info, go to this link: https://devcenter.heroku.com/articles/labs-user-env-compile
+heroku labs:enable user-env-compile
 git push heroku master
 ```
 
@@ -282,6 +299,13 @@ heroku config:add GITHUB_SECRET=the_secret_provided_by_GitHub
 heroku config:add GITHUB_ACCESS_SCOPE=repo,public_repo
 ```
 
+* GITHUB_ORG_ID [*optional*] - If set, any user of the specified GitHub Organization can login.  If it is their first time, an account will automatically be created for them.
+
+```bash
+heroku config:add GITHUB_ORG_ID=1234567
+```
+
+
 __Note__: To avoid restarting your Heroku app 4 times you can set Heroku variables in a single command, i.e:
 
 ```bash
@@ -306,9 +330,13 @@ Errbit::Config.devise_modules << :ldap_authenticatable
   before authentication. You must add the following lines to `app/models/user.rb`:
 
 ```ruby
-  before_save :set_ldap_email
-  def set_ldap_email
-    self.email = Devise::LdapAdapter.get_ldap_param(self.username, "mail")
+  def ldap_before_save
+    name = Devise::LDAP::Adapter.get_ldap_param(self.username, "givenName")
+    surname = Devise::LDAP::Adapter.get_ldap_param(self.username, "sn")
+    mail = Devise::LDAP::Adapter.get_ldap_param(self.username, "mail")
+
+    self.name = (name + surname).join ' '
+    self.email = mail.first
   end
 ```
 
@@ -321,8 +349,8 @@ user.admin = true
 user.save!
 ```
 
-Upgrading
----------
+## Upgrading
+
 When upgrading Errbit, please run:
 
 ```bash
@@ -335,8 +363,17 @@ rake assets:precompile
 If we change the way that data is stored, this will run any migrations to bring your database up to date.
 
 
-User information in error reports
----------------------------------
+### Upgrade from errbit 0.2 to 0.3
+
+The file of MongoDB connection config/mongoid.yml change between 0.2 to
+0.3. So Check the new config/mongoid.yml.example file and update it in
+good way.
+
+This change is not need to be done if you use only ENV variable to
+define you access to MongoDB database.
+
+
+## User information in error reports
 
 Errbit can now display information about the user who experienced an error.
 This gives you the ability to ask the user for more information,
@@ -371,6 +408,19 @@ end
 ```
 
 Then get the `notifier.js` from `errbit/public/javascript/notifier.js` and add to `application.js` on your rails app or include `http://YOUR-ERRBIT-HOST/javascripts/notifier.js` on your `application.html.erb.`
+
+Using custom fingerprinting methods
+-----------------------------------
+
+Errbit now allows you to easily use your own Fingerprint Strategy if that's what you'd like to do. If you are upgrading from a very old version of errbit, you can use the `LegacyFingerprint` to provide yourself
+with compatibility. The fingerprint strategy can be changed by adding an initializer to errbit:
+
+```ruby
+# config/fingerprint.rb
+ErrorReport.fingerprint_strategy = LegacyFingerprint
+```
+
+The easiest way to add custom fingerprint methods is to simply subclass `Fingerprint`
 
 Issue Trackers
 --------------
@@ -484,6 +534,10 @@ Solutions known to work are listed below:
   <tr>
     <th>PHP (&gt;= 5.3)</th>
     <td>https://github.com/flippa/errbit-php</td>
+  </tr>
+  <tr>
+    <th>OOP PHP (&gt;= 5.3)</th>
+    <td>https://github.com/emgiezet/errbitPHP</td>
   </tr>
   <tr>
     <th>Python</th>

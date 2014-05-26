@@ -1,3 +1,41 @@
+## 0.3.0 - Not released yet
+
+- [@arthurnn][]
+- [@emgiezet][]
+- [@jamescmartinez][]
+- [@mildavw][]
+- [@nashby][]
+- [@numbata][]
+- [@shingara][]
+- [@simi][]
+- [@ugisozols][]
+- [@1st8][]
+- [@jozefvaclavik][]
+- [@zhekanax][]
+- [@pkallberg][]
+- [@durrantm][]
+- [@felixbuenemann][]
+- [@soberstadt][]
+- [@rsutphin][]
+
+[@arthurnn]: https://github.com/arthurnn
+[@emgiezet]: https://github.com/emgiezet
+[@jamescmartinez]: https://github.com/jamescmartinez
+[@mildavw]: https://github.com/mildavw
+[@nashby]: https://github.com/nashby
+[@numbata]: https://github.com/numbata
+[@shingara]: https://github.com/shingara
+[@simi]: https://github.com/simi
+[@ugisozols]: https://github.com/ugisozols
+[@1st8]: https://github.com/1st8
+[@jozefvaclavik]: https://github.com/jozefvaclavik
+[@zhekanax]: https://github.com/zhekanax
+[@pkallberg]: https://github.com/pkallberg
+[@durrantm]: https://github.com/durrantm
+[@felixbuenemann]: https://github.com/felixbuenemann
+
+
+
 ## 0.2.1 - Not released yet
 
 - [@anicet][]
@@ -69,3 +107,5 @@
 [@tvdeyen]: https://github.com/tvdeyen
 [@williamn]: https://github.com/williamn
 [@xenji]: https://github.com/xenji
+[@soberstadt]: https://github.com/soberstadt
+[@rsutphin]: https://github.com/rsutphin
