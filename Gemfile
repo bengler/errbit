@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 RAILS_VERSION = '~> 3.2.18'
 
-gem 'actionmailer', RAILS_VERSION
-gem 'actionpack', RAILS_VERSION
+gem 'actionmailer', RAILS_VERSION, :require => 'action_mailer'
+gem 'actionpack', RAILS_VERSION, :require => 'action_pack'
 gem 'railties', RAILS_VERSION
 
 gem 'mongoid'
