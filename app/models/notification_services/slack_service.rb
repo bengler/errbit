@@ -26,7 +26,7 @@ class NotificationServices::SlackService < NotificationService
   end
 
   def message_for_slack(problem)
-    "*#{problem.app.name}:* #{problem.message.to_s.lines.first.gsub(/['"]?https?:\/\/\S+/, '[stripped]')} #{problem_url(problem)}"
+    "*#{problem.app.name}:* #{problem.message.to_s.lines.first.gsub(/['"]?https?:\/\/\S+/, '_[stripped]_')} #{problem_url(problem)}"
   end
 
   def post_payload(problem)
