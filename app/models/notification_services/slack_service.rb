@@ -32,6 +32,7 @@ class NotificationServices::SlackService < NotificationService
   def post_payload(problem)
     payload = {:text => message_for_slack(problem) }
     payload[:channel] = room_id unless room_id.empty?
+    payload[:channel] = '#staging' if problem.environment == 'staging'
     payload.to_json
   end
 
