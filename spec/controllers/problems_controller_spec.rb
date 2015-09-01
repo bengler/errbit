@@ -138,15 +138,13 @@ describe ProblemsController, type: 'controller' do
     end
 
     it "searches problems for given string" do
-      get :search, :search => "Most important"
+      get :search, :search => "\"Most important\""
       expect(controller.problems).to include(@problem1)
       expect(controller.problems).to_not include(@problem2)
     end
   end
 
   describe "GET /apps/:app_id/problems/:id" do
-    #render_views
-
     context 'when logged in as an admin' do
       before do
         sign_in admin
@@ -218,9 +216,7 @@ describe ProblemsController, type: 'controller' do
       @err = Fabricate(:err)
     end
 
-    it 'finds the app and the err' do
-      expect(App).to receive(:find).with(@err.app.id.to_s).and_return(@err.app)
-      expect(@err.app.problems).to receive(:find).and_return(@err.problem)
+    it 'finds the app and the problem' do
       put :resolve, :app_id => @err.app.id, :id => @err.problem.id
       expect(controller.app).to eq @err.app
       expect(controller.problem).to eq @err.problem
@@ -252,8 +248,8 @@ describe ProblemsController, type: 'controller' do
     before { sign_in admin }
 
     context "when app has a issue tracker" do
-      let(:notice) { Fabricate :notice }
-      let(:problem) { notice.problem }
+      let(:notice) { NoticeDecorator.new(Fabricate :notice) }
+      let(:problem) { ProblemDecorator.new(notice.problem) }
       let(:issue_tracker) do
         Fabricate(:issue_tracker).tap do |t|
           t.instance_variable_set(:@tracker, ErrbitPlugin::MockIssueTracker.new(t.options))

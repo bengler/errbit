@@ -12,26 +12,21 @@ class ProblemsController < ApplicationController
     :resolve_several, :unresolve_several, :unmerge_several
   ]
 
-  expose(:app) {
-    if current_user.admin?
-      App.find(params[:app_id])
-    else
-      current_user.apps.find(params[:app_id])
-    end
-  }
-
-  expose(:problem) {
-    app.problems.find(params[:id])
-  }
-
-
-  expose(:all_errs) {
-    params[:all_errs]
-  }
-
   expose(:app_scope) {
     apps = current_user.admin? ? App.all : current_user.apps
     params[:app_id] ? apps.where(:_id => params[:app_id]) : apps
+  }
+
+  expose(:app) {
+    AppDecorator.new app_scope.find(params[:app_id])
+  }
+
+  expose(:problem) {
+    ProblemDecorator.new app.problems.find(params[:id])
+  }
+
+  expose(:all_errs) {
+    params[:all_errs]
   }
 
   expose(:params_environement) {
@@ -55,8 +50,9 @@ class ProblemsController < ApplicationController
   def index; end
 
   def show
-    @notices  = problem.notices.reverse_ordered.page(params[:notice]).per(1)
-    @notice   = @notices.first
+    @notices = problem.object.notices.reverse_ordered
+      .page(params[:notice]).per(1)
+    @notice  = NoticeDecorator.new @notices.first
     @comment = Comment.new
   end
 

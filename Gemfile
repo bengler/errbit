@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-RAILS_VERSION = '~> 4.1.8'
+RAILS_VERSION = '~> 4.2.0'
 
 send :ruby, ENV['GEMFILE_RUBY_VERSION'] if ENV['GEMFILE_RUBY_VERSION']
 
@@ -8,10 +8,9 @@ gem 'actionmailer', RAILS_VERSION, :require => 'action_mailer'
 gem 'actionpack', RAILS_VERSION, :require => 'action_pack'
 gem 'railties', RAILS_VERSION
 
-gem 'moped', '~> 2.0.2'
-gem 'mongoid', '~> 4.0.0'
-
+gem 'mongoid', '5.0.0.beta'
 gem 'mongoid_rails_migrations'
+
 gem 'devise'
 gem 'haml'
 gem 'htmlentities'
@@ -28,8 +27,8 @@ gem 'rails_autolink'
 gem 'hoptoad_notifier', "~> 2.4"
 gem 'draper'
 
-gem 'errbit_plugin', github: 'errbit/errbit_plugin'
-gem 'errbit_github_plugin', github: 'errbit/errbit_github_plugin'
+gem 'errbit_plugin'
+gem 'errbit_github_plugin'
 
 gem 'dotenv-rails'
 
@@ -78,16 +77,15 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'rspec', '~> 3.3'
   gem 'rspec-rails', '~> 3.0', require: false
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'
-  gem 'mongoid-rspec', require: false
+  gem 'mongoid-rspec', '~> 2.3.0.beta', require: false
   gem 'fabrication'
   gem 'capybara'
   gem 'poltergeist'
   gem 'launchy'
-  gem 'database_cleaner'
   gem 'email_spec'
   gem 'timecop'
   gem 'test-unit', require: 'test/unit'
@@ -99,6 +97,7 @@ group :heroku, :production do
   gem 'unicorn', require: false, platform: 'ruby'
 end
 
+gem 'therubyracer', :platform => :ruby  # C Ruby (MRI) or Rubinius, but NOT Windows
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
@@ -107,3 +106,6 @@ gem 'uglifier'
 gem 'jquery-rails', '~> 2.1.4'
 gem 'pjax_rails'
 gem 'underscore-rails'
+
+ENV['USER_GEMFILE'] ||= './UserGemfile'
+eval_gemfile ENV['USER_GEMFILE'] if File.exist?(ENV['USER_GEMFILE'])
