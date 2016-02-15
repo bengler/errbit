@@ -1,14 +1,14 @@
 class NotificationServices::SlackService < NotificationService
-  Label = "slack"
-  Fields += [
+  LABEL = "slack"
+  FIELDS += [
     [:service_url, {
-      :placeholder => 'Slack Hook URL (https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXX)',
-      :label => 'Hook URL'
+      placeholder: 'Slack Hook URL (https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXX)',
+      label:       'Hook URL'
     }]
   ]
 
   def check_params
-    if Fields.detect {|f| self[f[0]].blank? }
+    if FIELDS.detect { |f| self[f[0]].blank? }
       errors.add :base, "You must specify your Slack Hook url."
     end
   end
@@ -35,7 +35,13 @@ class NotificationServices::SlackService < NotificationService
   end
 
   def create_notification(problem)
-    HTTParty.post(service_url, :body => post_payload(problem), :headers => { 'Content-Type' => 'application/json' })
+    HTTParty.post(
+      service_url,
+      body:    post_payload(problem),
+      headers: {
+        'Content-Type' => 'application/json'
+      }
+    )
   end
 
   def configured?
