@@ -14,7 +14,7 @@ class NotificationServices::SlackService < NotificationService
   end
 
   def message_for_slack(problem)
-    "*#{problem.app.name}:* #{problem.message.to_s.lines.first} #{problem_url(problem)}"
+    "*#{problem.app.name}:* #{problem.message.to_s.lines.first} #{problem.url}"
   end
 
   def post_payload(problem)
@@ -23,7 +23,7 @@ class NotificationServices::SlackService < NotificationService
         {
            :fallback => message_for_slack(problem),
            :title => problem.message.to_s.lines.first.truncate(100),
-           :title_link => problem_url(problem),
+           :title_link => problem.url,
            :text => "*#{problem.app.name}* (#{problem.notices_count} times)",
            :mrkdwn_in => ["text"],
            :color => "#D00000"
